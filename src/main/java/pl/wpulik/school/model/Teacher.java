@@ -22,17 +22,17 @@ public class Teacher implements Serializable{
 	private Integer age;
 	@Email
 	private String email;
-	private String specialization;
+	private String subject;
 	
 	public Teacher() {}
 
 	public Teacher(@Size(min = 3) String firstName, String lastName, @Min(19) Integer age, @Email String email,
-			String specialization) {
+			String subject) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
 		this.email = email;
-		this.specialization = specialization;
+		this.subject = subject;
 	}
 
 	public Long getId() {
@@ -75,12 +75,12 @@ public class Teacher implements Serializable{
 		this.email = email;
 	}
 
-	public String getSpecialization() {
-		return specialization;
+	public String getSubject() {
+		return subject;
 	}
 
-	public void setSpecialization(String specialization) {
-		this.specialization = specialization;
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public class Teacher implements Serializable{
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((specialization == null) ? 0 : specialization.hashCode());
+		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
 		return result;
 	}
 
@@ -124,10 +124,10 @@ public class Teacher implements Serializable{
 				return false;
 		} else if (!lastName.equals(other.lastName))
 			return false;
-		if (specialization == null) {
-			if (other.specialization != null)
+		if (subject == null) {
+			if (other.subject != null)
 				return false;
-		} else if (!specialization.equals(other.specialization))
+		} else if (!subject.equals(other.subject))
 			return false;
 		return true;
 	}
@@ -135,7 +135,7 @@ public class Teacher implements Serializable{
 	@Override
 	public String toString() {
 		return "Teacher [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age + ", email="
-				+ email + ", specialization=" + specialization + "]";
+				+ email + ", subject=" + subject + "]";
 	}
 	
 	
