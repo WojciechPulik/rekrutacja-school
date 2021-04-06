@@ -1,9 +1,13 @@
 package pl.wpulik.school.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -14,6 +18,7 @@ public class Teacher implements Serializable{
 	
 	@Id
 	@GeneratedValue
+	@Column(name="id_teacher")
 	private Long id;
 	@Size(min=3)
 	private String firstName;
@@ -23,6 +28,8 @@ public class Teacher implements Serializable{
 	@Email
 	private String email;
 	private String subject;
+	@ManyToMany(mappedBy="teachers")
+	private Set<Student> students = new HashSet<>();
 	
 	public Teacher() {}
 
@@ -81,6 +88,14 @@ public class Teacher implements Serializable{
 
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+
+	public Set<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(Set<Student> students) {
+		this.students = students;
 	}
 
 	@Override

@@ -1,9 +1,15 @@
 package pl.wpulik.school.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -14,6 +20,7 @@ public class Student implements Serializable{
 	
 	@Id
 	@GeneratedValue
+	@Column(name="teacher_id")
 	private Long id;
 	@Size(min=3)
 	private String firstName;
@@ -23,6 +30,12 @@ public class Student implements Serializable{
 	@Email
 	private String email;
 	private String specialization;
+	@ManyToMany
+	@JoinTable(name="teacher_students",
+		joinColumns = {@JoinColumn(name="teacher_id", referencedColumnName = "id_teacher")},
+		inverseJoinColumns = {@JoinColumn(name="student_id", referencedColumnName = "id_student")}
+	)
+	private Set<Teacher> teachers = new HashSet<>();
 	
 	public Student() {}
 	
@@ -81,6 +94,14 @@ public class Student implements Serializable{
 
 	public void setSpecialization(String specialization) {
 		this.specialization = specialization;
+	}
+	
+	public Set<Teacher> getTeachers(){
+		return teachers;
+	}
+	
+	public void setTeachers(Set<Teacher> teachers) {
+		this.teachers = teachers;
 	}
 
 	@Override
