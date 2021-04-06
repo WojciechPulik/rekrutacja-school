@@ -1,11 +1,14 @@
 package pl.wpulik.school.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pl.wpulik.school.repository.TeacherRepository;
 
 @Service
+@Transactional
 public class TeacherService {
 	
 	private TeacherRepository teacherRepository;

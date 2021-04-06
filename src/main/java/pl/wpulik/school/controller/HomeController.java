@@ -12,6 +12,7 @@ public class HomeController {
 	private TeacherService teacherService;
 	private StudentService studentService;
 	
+	public HomeController() {}
 	
 	@Autowired
 	public HomeController(TeacherService teacherService, StudentService studentService) {

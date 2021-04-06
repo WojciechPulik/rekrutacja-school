@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -14,13 +16,14 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
+@Entity
 public class Student implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue
-	@Column(name="teacher_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_student")
 	private Long id;
 	@Size(min=3)
 	private String firstName;
@@ -32,8 +35,8 @@ public class Student implements Serializable{
 	private String specialization;
 	@ManyToMany
 	@JoinTable(name="teacher_students",
-		joinColumns = {@JoinColumn(name="teacher_id", referencedColumnName = "id_teacher")},
-		inverseJoinColumns = {@JoinColumn(name="student_id", referencedColumnName = "id_student")}
+		joinColumns = {@JoinColumn(name="student_id", referencedColumnName = "id_student")},
+		inverseJoinColumns = {@JoinColumn(name="teacher_id", referencedColumnName = "id_teacher")}
 	)
 	private Set<Teacher> teachers = new HashSet<>();
 	
