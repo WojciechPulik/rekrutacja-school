@@ -27,6 +27,10 @@ public class StudentService {
 		return studentRepository.save(student);
 	}
 	
+	public void removeStudent(Long id) {
+		studentRepository.deleteById(id);
+	}
+	
 	public Page<Student> findAllPaginated(Pageable pageable){
 		return studentRepository.findAll(pageable);
 	}

@@ -27,6 +27,10 @@ public class TeacherService {
 		return teacherRepository.save(teacher);
 	}
 	
+	public void removeTeacher(Long id) {
+		teacherRepository.deleteById(id);
+	}
+	
 	public Page<Teacher> findAllPaginated(Pageable pageable){
 		return teacherRepository.findAll(pageable);
 	}
