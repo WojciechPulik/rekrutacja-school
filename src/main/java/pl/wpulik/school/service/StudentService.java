@@ -3,6 +3,8 @@ package pl.wpulik.school.service;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import pl.wpulik.school.model.Student;
@@ -25,6 +27,8 @@ public class StudentService {
 		return studentRepository.save(student);
 	}
 	
-	
+	public Page<Student> findAllPaginated(Pageable pageable){
+		return studentRepository.findAll(pageable);
+	}
 
 }

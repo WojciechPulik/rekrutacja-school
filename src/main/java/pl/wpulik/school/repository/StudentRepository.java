@@ -10,5 +10,5 @@ import pl.wpulik.school.model.Student;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long>{
 
-	Page <Student> findAll(Pageable pageabale);
+	Page <Student> findAll(Pageable pageable);
 }

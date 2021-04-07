@@ -52,9 +52,20 @@ public class HomeController {
 	}
 	
 	@GetMapping("/teacher/all")
-	public ResponseEntity<Page<Teacher>> fetchAll(Pageable pageable){
+	public ResponseEntity<Page<Teacher>> fetchAllTeachers(Pageable pageable){
 		try {
-			Page<Teacher> pageStudents = teacherService.findAllPaginated(pageable);
+			Page<Teacher> pageTeachers = teacherService.findAllPaginated(pageable);
+			return new ResponseEntity<>(pageTeachers, HttpStatus.FOUND);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/student/all")
+	public ResponseEntity<Page<Student>> fetchAllStudents(Pageable pageable){
+		try {
+			Page<Student> pageStudents = studentService.findAllPaginated(pageable);
 			return new ResponseEntity<>(pageStudents, HttpStatus.FOUND);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
