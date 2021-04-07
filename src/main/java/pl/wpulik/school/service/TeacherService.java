@@ -1,5 +1,7 @@
 package pl.wpulik.school.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,10 @@ public class TeacherService {
 	
 	public Teacher addTeacher(Teacher teacher) {
 		return teacherRepository.save(teacher);
+	}
+	
+	public Page<Teacher> findAllPaginated(Pageable pageable){
+		return teacherRepository.findAll(pageable);
 	}
 	
 	

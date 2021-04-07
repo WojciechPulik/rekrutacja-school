@@ -1,8 +1,11 @@
 package pl.wpulik.school.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,6 +45,17 @@ public class HomeController {
 		try {
 			Teacher _teacher = teacherService.addTeacher(teacher);
 			return new ResponseEntity<>(_teacher, HttpStatus.CREATED);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/teacher/all")
+	public ResponseEntity<Page<Teacher>> fetchAll(Pageable pageable){
+		try {
+			Page<Teacher> pageStudents = teacherService.findAllPaginated(pageable);
+			return new ResponseEntity<>(pageStudents, HttpStatus.FOUND);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

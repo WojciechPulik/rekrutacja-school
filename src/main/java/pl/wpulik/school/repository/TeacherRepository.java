@@ -10,6 +10,6 @@ import pl.wpulik.school.model.Teacher;
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 	
-	Page<Teacher> findAll(Pageable pagebale);
+	Page<Teacher> findAll(Pageable pageable);
 
 }
