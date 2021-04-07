@@ -26,7 +26,7 @@ public class Teacher implements Serializable{
 	@Size(min=3)
 	private String firstName;
 	private String lastName;
-	@Min(19)
+	@Min(18)
 	private Integer age;
 	@Email
 	private String email;

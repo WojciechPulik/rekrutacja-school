@@ -5,6 +5,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pl.wpulik.school.model.Student;
 import pl.wpulik.school.repository.StudentRepository;
 
 @Service
@@ -18,6 +19,10 @@ public class StudentService {
 	@Autowired
 	public StudentService(StudentRepository studentRepository) {
 		this.studentRepository = studentRepository;
+	}
+	
+	public Student addStudent(Student student) {
+		return studentRepository.save(student);
 	}
 	
 	
