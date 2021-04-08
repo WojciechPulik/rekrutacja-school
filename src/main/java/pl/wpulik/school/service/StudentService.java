@@ -27,6 +27,22 @@ public class StudentService {
 		return studentRepository.save(student);
 	}
 	
+	public Student updateStudent(Long id, Student student) {
+		Student studentToUpdate = studentRepository.findById(id).get();
+		studentToUpdate.setId(id);
+		if(student.getFirstName() != null)
+			studentToUpdate.setFirstName(student.getFirstName());
+		if(student.getLastName() != null)
+			studentToUpdate.setLastName(student.getLastName());
+		if(student.getAge() != null)
+			studentToUpdate.setAge(student.getAge());
+		if(student.getEmail() != null)
+			studentToUpdate.setEmail(student.getEmail());
+		if(student.getSpecialization() != null)
+			studentToUpdate.setSpecialization(student.getSpecialization());
+		return studentRepository.save(studentToUpdate);
+	}
+	
 	public boolean removeStudent(Long id) {
 		boolean exists = studentRepository.existsById(id);
 		if(exists)
