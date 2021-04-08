@@ -27,8 +27,11 @@ public class StudentService {
 		return studentRepository.save(student);
 	}
 	
-	public void removeStudent(Long id) {
-		studentRepository.deleteById(id);
+	public boolean removeStudent(Long id) {
+		boolean exists = studentRepository.existsById(id);
+		if(exists)
+			studentRepository.deleteById(id);
+		return exists;
 	}
 	
 	public Page<Student> findAllPaginated(Pageable pageable){

@@ -43,10 +43,13 @@ public class HomeController {
 	}
 	
 	@DeleteMapping("/student/remove")
-	public ResponseEntity<String> removeStudent(@RequestParam Long studentId){
+	public ResponseEntity<Long> removeStudent(@RequestParam Long studentId){
 		try {
-			studentService.removeStudent(studentId);
-			return new ResponseEntity<>("Student has been removed", HttpStatus.OK);
+			boolean isRemoved = studentService.removeStudent(studentId);
+			if(isRemoved)
+				return new ResponseEntity<>(studentId, HttpStatus.OK);
+			else
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -57,7 +60,7 @@ public class HomeController {
 	public ResponseEntity<Teacher> addTeacher(@RequestBody Teacher teacher){
 		try {
 			Teacher _teacher = teacherService.addTeacher(teacher);
-			return new ResponseEntity<>(_teacher, HttpStatus.CREATED);
+			return new ResponseEntity<>(_teacher, HttpStatus.OK);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -65,10 +68,13 @@ public class HomeController {
 	}
 	
 	@DeleteMapping("/teacher/remove")
-	public ResponseEntity<String> removeTeacher(@RequestParam Long teacherId){
+	public ResponseEntity<Long> removeTeacher(@RequestParam Long teacherId){
 		try {
-			teacherService.removeTeacher(teacherId);
-			return new ResponseEntity<>("Teacher has been removed", HttpStatus.OK);
+			boolean isRemoved = teacherService.removeTeacher(teacherId);
+			if(isRemoved)
+				return new ResponseEntity<>(teacherId, HttpStatus.OK);
+			else
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
