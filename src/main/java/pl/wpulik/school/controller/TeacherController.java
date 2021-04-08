@@ -1,5 +1,7 @@
 package pl.wpulik.school.controller;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,12 +48,11 @@ public class TeacherController {
 	public ResponseEntity<Teacher> updateTeacher(@PathVariable Long teacherId, @RequestBody Teacher teacher){
 		try {
 			Teacher _teacher = teacherService.updateTeacher(teacherId, teacher);
-			if(_teacher != null)
-				return new ResponseEntity<>(_teacher, HttpStatus.OK);
-			else
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
-		}catch (Exception e) {
-			System.err.println(e.getMessage());
+			return new ResponseEntity<>(_teacher, HttpStatus.OK);		
+		}catch (NoSuchElementException e1) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);		
+		}catch (Exception e2) {
+			System.err.println(e2.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
