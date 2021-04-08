@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,6 +37,20 @@ public class TeacherController {
 			Teacher _teacher = teacherService.addTeacher(teacher);
 			return new ResponseEntity<>(_teacher, HttpStatus.OK);
 		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PutMapping("/update/{teacherId}")
+	public ResponseEntity<Teacher> updateTeacher(@PathVariable Long teacherId, @RequestBody Teacher teacher){
+		try {
+			Teacher _teacher = teacherService.updateTeacher(teacherId, teacher);
+			if(_teacher != null)
+				return new ResponseEntity<>(_teacher, HttpStatus.OK);
+			else
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
+		}catch (Exception e) {
 			System.err.println(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

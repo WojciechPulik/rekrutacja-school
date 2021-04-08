@@ -27,6 +27,22 @@ public class TeacherService {
 		return teacherRepository.save(teacher);
 	}
 	
+	public Teacher updateTeacher(Long id, Teacher teacher) {
+		Teacher teacherToUpdate = teacherRepository.findById(id).get();
+		teacherToUpdate.setId(id);
+		if(teacher.getFirstName() != null)
+			teacherToUpdate.setFirstName(teacher.getFirstName());
+		if(teacher.getLastName() != null)
+			teacherToUpdate.setLastName(teacher.getLastName());
+		if(teacher.getAge() != null)
+			teacherToUpdate.setAge(teacher.getAge());
+		if(teacher.getEmail() != null)
+			teacherToUpdate.setEmail(teacher.getEmail());
+		if(teacher.getSubject() != null)
+			teacherToUpdate.setSubject(teacher.getSubject());
+		return teacherRepository.save(teacherToUpdate);
+	}
+	
 	public boolean removeTeacher(Long id) {
 		boolean exists = teacherRepository.existsById(id);
 		if(exists)
