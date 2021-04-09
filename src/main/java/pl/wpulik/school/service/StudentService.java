@@ -4,9 +4,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import pl.wpulik.school.dto.StudentDto;
 import pl.wpulik.school.model.Student;
 import pl.wpulik.school.model.Teacher;
 import pl.wpulik.school.repository.StudentRepository;
@@ -64,8 +66,10 @@ public class StudentService {
 		return student;
 	}
 	
-	public Page<Student> findAllPaginated(Pageable pageable){
-		return studentRepository.findAll(pageable);
+	public Page<StudentDto> findAllPaginated(Pageable pageable){
+		Page<Student> students = studentRepository.findAll(pageable);
+		Page<StudentDto> studentsDto = students.map(StudentDto::mapToDto);
+		return studentsDto;
 	}
 
 }

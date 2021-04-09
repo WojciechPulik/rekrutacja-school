@@ -46,10 +46,10 @@ public class StudentController {
 	}
 	
 	@PostMapping("/save")
-	public ResponseEntity<Student> addStudent(@RequestBody Student student){
+	public ResponseEntity<StudentDto> addStudent(@RequestBody StudentDto studentDto){
 		try {
-			Student _student = studentService.addStudent(student);
-			return new ResponseEntity<>(_student, HttpStatus.CREATED);
+			Student student = studentService.addStudent(StudentDto.mapToEntity(studentDto));
+			return new ResponseEntity<>(StudentDto.mapToDto(student), HttpStatus.CREATED);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -95,9 +95,9 @@ public class StudentController {
 	}
 	
 	@GetMapping("/all")
-	public ResponseEntity<Page<Student>> fetchAllStudents(Pageable pageable){
+	public ResponseEntity<Page<StudentDto>> fetchAllStudents(Pageable pageable){
 		try {
-			Page<Student> pageStudents = studentService.findAllPaginated(pageable);
+			Page<StudentDto> pageStudents = studentService.findAllPaginated(pageable);
 			return new ResponseEntity<>(pageStudents, HttpStatus.FOUND);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
