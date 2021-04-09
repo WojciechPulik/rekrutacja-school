@@ -37,7 +37,6 @@ public class StudentService {
 	
 	public Student updateStudent(Long id, Student student) {
 		Student studentToUpdate = studentRepository.findById(id).get();
-		studentToUpdate.setId(id); //TODO:remove this line
 		if(student.getFirstName() != null)
 			studentToUpdate.setFirstName(student.getFirstName());
 		if(student.getLastName() != null)

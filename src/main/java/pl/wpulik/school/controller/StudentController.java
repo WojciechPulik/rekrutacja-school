@@ -57,10 +57,10 @@ public class StudentController {
 	}
 	
 	@PutMapping("/update/{studentId}")
-	public ResponseEntity<Student> updateStudent(@PathVariable Long studentId, @RequestBody Student student){
+	public ResponseEntity<StudentDto> updateStudent(@PathVariable Long studentId, @RequestBody StudentDto studentDto){
 		try {
-			Student _student = studentService.updateStudent(studentId, student);
-			return new ResponseEntity<>(_student, HttpStatus.OK);				
+			Student student = studentService.updateStudent(studentId, StudentDto.mapToEntity(studentDto));
+			return new ResponseEntity<>(StudentDto.mapToDto(student), HttpStatus.OK);				
 		}catch (NoSuchElementException e1) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}catch (Exception e2) {
