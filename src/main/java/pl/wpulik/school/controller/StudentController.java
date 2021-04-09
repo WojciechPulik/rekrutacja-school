@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import pl.wpulik.school.dto.StudentDto;
 import pl.wpulik.school.model.Student;
 import pl.wpulik.school.service.StudentService;
 
@@ -31,6 +32,17 @@ public class StudentController {
 	@Autowired
 	public StudentController(StudentService studentService) {
 		this.studentService = studentService;
+	}
+	
+	@GetMapping("/findById/{studentId}")
+	public ResponseEntity<StudentDto> getStudentById(@PathVariable Long studentId){
+		try {
+			Student student = studentService.getById(studentId);
+			return new ResponseEntity<>(StudentDto.mapToDto(student), HttpStatus.CREATED);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	@PostMapping("/save")
@@ -66,6 +78,17 @@ public class StudentController {
 			else
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PostMapping("/addTeacher")
+	public ResponseEntity<StudentDto> addTeacherToStudent(@RequestParam Long teacherId, @RequestParam Long studentId){
+		try {
+			Student student = studentService.addTeacherToStudent(teacherId, studentId);
+			return new ResponseEntity<>(StudentDto.mapToDto(student), HttpStatus.OK);
+		}catch(Exception e) {
 			System.err.println(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

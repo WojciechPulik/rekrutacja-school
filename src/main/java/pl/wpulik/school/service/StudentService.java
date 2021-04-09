@@ -8,19 +8,27 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import pl.wpulik.school.model.Student;
+import pl.wpulik.school.model.Teacher;
 import pl.wpulik.school.repository.StudentRepository;
+import pl.wpulik.school.repository.TeacherRepository;
 
 @Service
 @Transactional
 public class StudentService {
 	
 	private StudentRepository studentRepository;
+	private TeacherRepository teacherRepository;
 	
 	public StudentService() {}
 
 	@Autowired
-	public StudentService(StudentRepository studentRepository) {
+	public StudentService(StudentRepository studentRepository, TeacherRepository teacherRepository) {
 		this.studentRepository = studentRepository;
+		this.teacherRepository = teacherRepository;
+	}
+	
+	public Student getById(Long studentId) {
+		return studentRepository.getOne(studentId);
 	}
 	
 	public Student addStudent(Student student) {
@@ -29,7 +37,7 @@ public class StudentService {
 	
 	public Student updateStudent(Long id, Student student) {
 		Student studentToUpdate = studentRepository.findById(id).get();
-		studentToUpdate.setId(id);
+		studentToUpdate.setId(id); //TODO:remove this line
 		if(student.getFirstName() != null)
 			studentToUpdate.setFirstName(student.getFirstName());
 		if(student.getLastName() != null)
@@ -48,6 +56,13 @@ public class StudentService {
 		if(exists)
 			studentRepository.deleteById(id);
 		return exists;
+	}
+	
+	public Student addTeacherToStudent(Long teacherId, Long studentId) {
+		Student student = studentRepository.findById(studentId).get();
+		Teacher teacher = teacherRepository.findById(teacherId).get();
+		student.getTeachers().add(teacher);
+		return student;
 	}
 	
 	public Page<Student> findAllPaginated(Pageable pageable){
