@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import pl.wpulik.school.dto.TeacherDto;
 import pl.wpulik.school.model.Teacher;
 import pl.wpulik.school.service.TeacherService;
 
@@ -33,11 +34,22 @@ public class TeacherController {
 		this.teacherService = teacherService;
 	}
 	
-	@PostMapping("/save")
-	public ResponseEntity<Teacher> addTeacher(@RequestBody Teacher teacher){
+	@GetMapping("/findById/{teacherId}")
+	public ResponseEntity<TeacherDto> getTeacherById(@PathVariable Long teacherId){
 		try {
-			Teacher _teacher = teacherService.addTeacher(teacher);
-			return new ResponseEntity<>(_teacher, HttpStatus.OK);
+			Teacher teacher = teacherService.getById(teacherId);
+			return new ResponseEntity<>(TeacherDto.mapToDto(teacher), HttpStatus.FOUND);			
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PostMapping("/save")
+	public ResponseEntity<TeacherDto> addTeacher(@RequestBody TeacherDto teacherDto){
+		try {
+			Teacher teacher = teacherService.addTeacher(TeacherDto.mapToEntity(teacherDto));
+			return new ResponseEntity<>(TeacherDto.mapToDto(teacher), HttpStatus.OK);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -45,10 +57,10 @@ public class TeacherController {
 	}
 	
 	@PutMapping("/update/{teacherId}")
-	public ResponseEntity<Teacher> updateTeacher(@PathVariable Long teacherId, @RequestBody Teacher teacher){
+	public ResponseEntity<TeacherDto> updateTeacher(@PathVariable Long teacherId, @RequestBody TeacherDto teacherDto){
 		try {
-			Teacher _teacher = teacherService.updateTeacher(teacherId, teacher);
-			return new ResponseEntity<>(_teacher, HttpStatus.OK);		
+			Teacher teacher = teacherService.updateTeacher(teacherId, TeacherDto.mapToEntity(teacherDto));
+			return new ResponseEntity<>(TeacherDto.mapToDto(teacher), HttpStatus.OK);		
 		}catch (NoSuchElementException e1) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);		
 		}catch (Exception e2) {
@@ -71,10 +83,21 @@ public class TeacherController {
 		}
 	}
 	
-	@GetMapping("/all")
-	public ResponseEntity<Page<Teacher>> fetchAllTeachers(Pageable pageable){
+	@PostMapping("/addStudent")
+	public ResponseEntity<TeacherDto> addStudentToTeacher(@RequestParam Long studentId, @RequestParam Long teacherId){
 		try {
-			Page<Teacher> pageTeachers = teacherService.findAllPaginated(pageable);
+			Teacher teacher = teacherService.addStudentToTeacher(studentId, teacherId);
+			return new ResponseEntity<>(TeacherDto.mapToDto(teacher), HttpStatus.OK);			
+		} catch(Exception e) {
+			System.err.println(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<Page<TeacherDto>> fetchAllTeachers(Pageable pageable){
+		try {
+			Page<TeacherDto> pageTeachers = teacherService.findAllPaginated(pageable);
 			return new ResponseEntity<>(pageTeachers, HttpStatus.FOUND);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());

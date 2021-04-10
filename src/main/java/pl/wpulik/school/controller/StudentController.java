@@ -38,7 +38,7 @@ public class StudentController {
 	public ResponseEntity<StudentDto> getStudentById(@PathVariable Long studentId){
 		try {
 			Student student = studentService.getById(studentId);
-			return new ResponseEntity<>(StudentDto.mapToDto(student), HttpStatus.CREATED);
+			return new ResponseEntity<>(StudentDto.mapToDto(student), HttpStatus.FOUND);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
