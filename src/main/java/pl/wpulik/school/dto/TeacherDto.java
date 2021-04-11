@@ -2,6 +2,10 @@ package pl.wpulik.school.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
 import pl.wpulik.school.model.Teacher;
 
 public class TeacherDto implements Serializable{
@@ -9,9 +13,12 @@ public class TeacherDto implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	@Size(min=3)
 	private String firstName;
 	private String lastName;
+	@Min(18)
 	private Integer age;
+	@Email
 	private String email;
 	private String subject;
 	

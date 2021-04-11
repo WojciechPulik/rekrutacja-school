@@ -1,12 +1,17 @@
 package pl.wpulik.school.controller;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,7 +51,8 @@ public class TeacherController {
 	}
 	
 	@PostMapping("/save")
-	public ResponseEntity<TeacherDto> addTeacher(@RequestBody TeacherDto teacherDto){
+	public ResponseEntity<TeacherDto> addTeacher(@Valid @RequestBody TeacherDto teacherDto, BindingResult result){
+		validationErrorMessages(result);
 		try {
 			Teacher teacher = teacherService.addTeacher(TeacherDto.mapToEntity(teacherDto));
 			return new ResponseEntity<>(TeacherDto.mapToDto(teacher), HttpStatus.OK);
@@ -57,7 +63,9 @@ public class TeacherController {
 	}
 	
 	@PutMapping("/update/{teacherId}")
-	public ResponseEntity<TeacherDto> updateTeacher(@PathVariable Long teacherId, @RequestBody TeacherDto teacherDto){
+	public ResponseEntity<TeacherDto> updateTeacher(@PathVariable Long teacherId, @Valid @RequestBody TeacherDto teacherDto,
+			BindingResult result){
+		validationErrorMessages(result);
 		try {
 			Teacher teacher = teacherService.updateTeacher(teacherId, TeacherDto.mapToEntity(teacherDto));
 			return new ResponseEntity<>(TeacherDto.mapToDto(teacher), HttpStatus.OK);		
@@ -67,6 +75,13 @@ public class TeacherController {
 			System.err.println(e2.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	private void validationErrorMessages(BindingResult result) {
+		if (result.hasErrors()) {
+	        List<ObjectError> errors = result.getAllErrors();
+	        errors.forEach(err -> System.out.println(err.getDefaultMessage()));
+	    }
 	}
 	
 	@DeleteMapping("/remove")
