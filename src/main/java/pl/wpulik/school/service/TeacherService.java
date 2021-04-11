@@ -1,10 +1,10 @@
 package pl.wpulik.school.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import pl.wpulik.school.dto.TeacherDto;
@@ -65,6 +65,11 @@ public class TeacherService {
 		return teacher;
 	}
 	
+	public Page<TeacherDto> findTeachersByStudentId(Pageable pageable, Long studentId){
+		return teacherRepository.findAllByStudentId(pageable, studentId)
+				.map(TeacherDto::mapToDto);
+	}
+ 	
 	public Page<TeacherDto> findAllPaginated(Pageable pageable){
 		Page<Teacher> teachers = teacherRepository.findAll(pageable);
 		Page<TeacherDto> teachersDto = teachers.map(TeacherDto::mapToDto);
