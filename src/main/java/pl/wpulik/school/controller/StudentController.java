@@ -120,6 +120,19 @@ public class StudentController {
 		}
 	}
 	
+	@GetMapping("/findByLastName/{lastName}")
+	public ResponseEntity<Page<StudentDto>> getStudentsByLastName(Pageable pageable, @PathVariable String lastName){
+		try {
+			Page<StudentDto> students = studentService.findByLastName(pageable, lastName);
+			return new ResponseEntity<>(students, HttpStatus.FOUND);
+		}catch (NoSuchElementException e1) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
+		} catch (Exception e2) {
+			System.err.println(e2.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	@GetMapping("/all")
 	public ResponseEntity<Page<StudentDto>> fetchAllStudents(Pageable pageable){
 		try {

@@ -75,6 +75,11 @@ public class StudentService {
 				.map(StudentDto::mapToDto);
 	}
 	
+	public Page<StudentDto> findByLastName(Pageable pageable, String lastName){
+		return studentRepository.findByLastName(pageable, lastName)
+				.map(StudentDto::mapToDto);
+	}
+	
 	public Page<StudentDto> findAllPaginated(Pageable pageable){
 		return studentRepository.findAll(pageable)
 				.map(StudentDto::mapToDto);
