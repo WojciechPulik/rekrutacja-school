@@ -70,6 +70,7 @@ public class TeacherController {
 			Teacher teacher = teacherService.updateTeacher(teacherId, TeacherDto.mapToEntity(teacherDto));
 			return new ResponseEntity<>(TeacherDto.mapToDto(teacher), HttpStatus.OK);		
 		}catch (NoSuchElementException e1) {
+			System.err.println(e1.getMessage());
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);		
 		}catch (Exception e2) {
 			System.err.println(e2.getMessage());
@@ -115,6 +116,7 @@ public class TeacherController {
 			Page<TeacherDto> teachers = teacherService.findTeachersByStudentId(pageable, studentId);
 			return new ResponseEntity<>(teachers, HttpStatus.FOUND);
 		} catch (NoSuchElementException e1) {
+			System.err.println(e1.getMessage());
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
 		} catch (Exception e2) {
 			System.err.println(e2.getMessage());
@@ -129,6 +131,7 @@ public class TeacherController {
 			return new ResponseEntity<>(teachers, HttpStatus.FOUND);
 		}
 		 catch (NoSuchElementException e1) {
+			System.err.println(e1.getMessage());
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
 		} catch (Exception e2) {
 			System.err.println(e2.getMessage());
@@ -143,6 +146,7 @@ public class TeacherController {
 			return new ResponseEntity<>(teachers, HttpStatus.FOUND);
 		}
 		 catch (NoSuchElementException e1) {
+			System.err.println(e1.getMessage());
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
 		} catch (Exception e2) {
 			System.err.println(e2.getMessage());
