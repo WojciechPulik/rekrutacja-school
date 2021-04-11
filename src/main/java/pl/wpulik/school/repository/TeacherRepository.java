@@ -14,6 +14,10 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 	
 	Page<Teacher> findAll(Pageable pageable);
 	
+	Page<Teacher> findByFirstName(Pageable pageable, String firstName);
+	
+	Page<Teacher> findByLastName(Pageable pageable, String lastName);
+	
 	@Query("SELECT t FROM teacher t JOIN t.students s WHERE s.id = :studentId ")
 	Page <Teacher> findAllByStudentId(Pageable pageable, @Param("studentId") Long studentId);
 

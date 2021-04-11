@@ -107,6 +107,34 @@ public class TeacherController {
 		}
 	}
 	
+	@GetMapping("/findByFirstName/{firstName}")
+	public ResponseEntity<Page<TeacherDto>> getTeachersByFirstName(Pageable pageable, @PathVariable String firstName){
+		try {
+			Page<TeacherDto> teachers = teacherService.findTeacherByFirstName(pageable, firstName);
+			return new ResponseEntity<>(teachers, HttpStatus.FOUND);
+		}
+		 catch (NoSuchElementException e1) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
+		} catch (Exception e2) {
+			System.err.println(e2.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/findByLastName/{lastName}")
+	public ResponseEntity<Page<TeacherDto>> getTeachersByLastName(Pageable pageable, @PathVariable String lastName){
+		try {
+			Page<TeacherDto> teachers = teacherService.findTeacherByLastName(pageable, lastName);
+			return new ResponseEntity<>(teachers, HttpStatus.FOUND);
+		}
+		 catch (NoSuchElementException e1) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
+		} catch (Exception e2) {
+			System.err.println(e2.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	@GetMapping("/all")
 	public ResponseEntity<Page<TeacherDto>> fetchAllTeachers(Pageable pageable){
 		try {

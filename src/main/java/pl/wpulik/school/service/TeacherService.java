@@ -69,6 +69,16 @@ public class TeacherService {
 		return teacherRepository.findAllByStudentId(pageable, studentId)
 				.map(TeacherDto::mapToDto);
 	}
+	
+	public Page<TeacherDto> findTeacherByFirstName(Pageable pageable, String firstName){
+		return teacherRepository.findByFirstName(pageable, firstName)
+				.map(TeacherDto::mapToDto);
+	}
+	
+	public Page<TeacherDto> findTeacherByLastName(Pageable pageable, String lastName){
+		return teacherRepository.findByLastName(pageable, lastName)
+				.map(TeacherDto::mapToDto);
+	}
  	
 	public Page<TeacherDto> findAllPaginated(Pageable pageable){
 		Page<Teacher> teachers = teacherRepository.findAll(pageable);
