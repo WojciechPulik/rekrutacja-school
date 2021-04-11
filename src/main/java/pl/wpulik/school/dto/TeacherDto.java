@@ -1,8 +1,12 @@
 package pl.wpulik.school.dto;
 
+import java.io.Serializable;
+
 import pl.wpulik.school.model.Teacher;
 
-public class TeacherDto {
+public class TeacherDto implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private Long id;
 	private String firstName;
