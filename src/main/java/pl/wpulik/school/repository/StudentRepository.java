@@ -14,6 +14,8 @@ public interface StudentRepository extends JpaRepository<Student, Long>{
 
 	Page <Student> findAll(Pageable pageable);
 	
+	Page <Student> findByFirstName(Pageable pageable, String firstName);
+	
 	@Query("SELECT s FROM student s JOIN s.teachers t WHERE t.id = :teacherId ")
 	Page <Student> findAllByTeacherId(Pageable pageable, @Param("teacherId") Long teacherId);
 }
