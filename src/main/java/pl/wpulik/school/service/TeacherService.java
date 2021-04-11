@@ -81,9 +81,8 @@ public class TeacherService {
 	}
  	
 	public Page<TeacherDto> findAllPaginated(Pageable pageable){
-		Page<Teacher> teachers = teacherRepository.findAll(pageable);
-		Page<TeacherDto> teachersDto = teachers.map(TeacherDto::mapToDto);
-		return teachersDto;
+		return teacherRepository.findAll(pageable)
+				.map(TeacherDto::mapToDto);
 	}
 	
 	
