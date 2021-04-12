@@ -12,7 +12,7 @@
 	<artifactId>rekrutacja-school</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>rekrutacja-school</name>
-	<description>Gradle Test Project</description>
+	<description>Recrutation Task</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
